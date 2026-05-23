@@ -1,5 +1,6 @@
 #include "debug.h"
 #include "interrupt/idt.h"
+#include "halt.h"
 
 void isr_handler(regs_t *r) {
     static const char *ex_names[32] = {
@@ -17,7 +18,5 @@ void isr_handler(regs_t *r) {
     ERROR("Exception %d: %s. Error code: 0x%x", r->int_no, ex_names[r->int_no], r->err_code);
     ERROR("EAX: 0x%x, EBX: 0x%x, ECX: 0x%x, EDX: 0x%x", r->eax, r->ebx, r->ecx, r->edx);
     ERROR("EIP: 0x%x, CS: 0x%x, EFLAGS: 0x%x", r->eip, r->cs, r->eflags);
-    while (1) {
-        __asm__ volatile ("hlt");
-    }
+    halt();
 }
