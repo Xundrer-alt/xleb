@@ -51,10 +51,10 @@
               cd build
               cmake .. \
                   -DCMAKE_C_COMPILER=clang \
-                  -DCMAKE_C_FLAGS="$ARCH_FLAGS" \
+                  -DCMAKE_C_FLAGS="$CFLAGS" \
                   -DCMAKE_ASM_COMPILER=clang \
-                  -DCMAKE_ASM_FLAGS="$ARCH_FLAGS" \
-                  -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld $ARCH_FLAGS" \
+                  -DCMAKE_ASM_FLAGS="$CFLAGS" \
+                  -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS" \
                   -DCMAKE_SYSTEM_NAME="Generic" \
                   -DCMAKE_SYSTEM_PROCESSOR="$1" \
                   -DARCH="$ARCH"

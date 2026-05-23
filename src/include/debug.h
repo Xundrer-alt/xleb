@@ -1,5 +1,6 @@
 #pragma once
 #include "stdarg.h"
+#include "string.h"
 
 void debug_putc(char c);
 void debug_puts(const char *str);
