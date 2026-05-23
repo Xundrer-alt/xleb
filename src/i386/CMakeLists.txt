@@ -1,6 +1,8 @@
 set(SRC
     debug.c
     entry.S
+    gdt.S
+    get_bootloader_protocol.c
 )
 target_include_directories(kernel PRIVATE
     include

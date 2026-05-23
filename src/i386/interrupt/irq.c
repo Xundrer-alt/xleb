@@ -10,7 +10,7 @@ void irq_register_handler(uint8_t irq, irq_handler_t handler) {
         return;
     }
     if (irq_table[irq] != 0) {
-        WARNING("IRQ%d: overriding existing handler", irq);
+        WARN("IRQ%d: overriding existing handler", irq);
     }
     irq_table[irq] = handler;
     pic_unmask_irq(irq);
