@@ -12,8 +12,8 @@ static void process_cmdline(const char *cmdline) {
 static void process_memory_map(multiboot_info_t *mbi) {
     if (!(mbi->flags & MULTIBOOT_INFO_MEM_MAP)) return;
     INFO("- memory map (%u bytes):", mbi->mmap_length);
-    multiboot_memory_map_t *mmap = (multiboot_memory_map_t *)mbi->mmap_addr;
-    uint32_t mmap_end = mbi->mmap_addr + mbi->mmap_length;
+    multiboot_memory_map_t *mmap = (multiboot_memory_map_t *)PHYS_TO_VIRT(mbi->mmap_addr);
+    uint32_t mmap_end = PHYS_TO_VIRT(mbi->mmap_addr) + mbi->mmap_length;
     
     while ((uint32_t)mmap < mmap_end) {
         uint32_t start = (uint32_t)mmap->addr;
@@ -49,7 +49,7 @@ static void process_memory_map(multiboot_info_t *mbi) {
 static void process_modules(multiboot_info_t *mbi) {
     if (!(mbi->flags & MULTIBOOT_INFO_MODS)) return;
     INFO("- modules (%u):", mbi->mods_count);
-    multiboot_module_t *mods = (multiboot_module_t *)mbi->mods_addr;
+    multiboot_module_t *mods = (multiboot_module_t *)PHYS_TO_VIRT(mbi->mods_addr);
     for (uint32_t i = 0; i < mbi->mods_count; i++) {
         INFO("  - module %u:\n", i);
         INFO("    - address: 0x%x - 0x%x\n", mods[i].mod_start, mods[i].mod_end);
@@ -65,7 +65,7 @@ void multiboot1_parse_data() {
         ERROR("boot protocol seems to be multiboot1, but info_ptr = 0");
         halt();
     }
-    multiboot_info_t *mbi = (multiboot_info_t *)info_ptr;
+    multiboot_info_t *mbi = (multiboot_info_t *)PHYS_TO_VIRT(info_ptr);
     INFO("boot protocol is multiboot1");
     DEBUG("multiboot info structure at 0x%x", info_ptr);
     INFO("START MULTIBOOT1 INFO PARSING");
@@ -77,7 +77,7 @@ void multiboot1_parse_data() {
         INFO("- boot device: 0x%x", mbi->boot_device);
     }
     if (mbi->flags & MULTIBOOT_INFO_CMDLINE && mbi->cmdline) {
-        process_cmdline((char *)mbi->cmdline);
+        process_cmdline((char *)PHYS_TO_VIRT(mbi->cmdline));
     }
     process_memory_map(mbi);
     process_modules(mbi);

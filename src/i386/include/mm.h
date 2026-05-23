@@ -14,3 +14,5 @@ typedef struct {
     uint32_t size;
     memory_type_t type;
 } memory_region_t;
+
+#define PHYS_TO_VIRT(x) ((x) + 0xC0000000)
