@@ -68,6 +68,6 @@ boot_page_table:
     .skip 4096
 
 .align 16
-stack_top:
+stack_limit:
     .skip 16384
-stack_bottom:
+stack_top:
