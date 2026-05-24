@@ -4,11 +4,14 @@
 #include "interrupt/init.h"
 #include "halt.h"
 #include "memory/mm.h"
+#include "task/scheduler.h"
 
 void kmain() {
     interrupt_init();
     get_bootloader_protocol();
     mm_init();
     timer_init();
+    scheduler_init();
+    schedule(); // TEST
     halt();
 }
