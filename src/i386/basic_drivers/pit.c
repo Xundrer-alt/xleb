@@ -8,7 +8,6 @@ static volatile uint32_t timer_ticks = 0;
 
 static void timer_handler(regs_t *r) {
     timer_ticks++;
-    DEBUG("tick %d", timer_ticks); // TEST
 }
 
 void timer_init() {
