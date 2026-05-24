@@ -12,6 +12,5 @@ void kmain() {
     mm_init();
     timer_init();
     scheduler_init();
-    schedule(); // TEST
     halt();
 }

@@ -2,6 +2,7 @@
 #include "interrupt/idt.h"
 #include "interrupt/irq.h"
 #include "interrupt/pic.h"
+#include "task/scheduler.h"
 
 static irq_handler_t irq_table[16] = {0};
 
@@ -32,6 +33,7 @@ void irq_unregister_handler(uint8_t irq) {
 
 void irq_handler(regs_t *regs) {
     uint8_t irq = regs->int_no - 32;
+    pic_send_eoi(irq);
     if (irq >= 16) {
         ERROR("IRQ: invalid IRQ number %d (int_no=%d)", irq, regs->int_no);
         return;
@@ -41,5 +43,7 @@ void irq_handler(regs_t *regs) {
     } else {
         DEBUG("IRQ%d: no handler", irq);
     }
-    pic_send_eoi(irq);
+    if (irq == 0) {
+        schedule();
+    }
 }

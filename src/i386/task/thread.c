@@ -20,6 +20,7 @@ thread_t* thread_create(void (*entry)()) {
     *(--esp) = 0;
     *(--esp) = 0;
     *(--esp) = 0;
+    *(--esp) = 0x202;
     thread->esp = esp;
     return thread;
 }

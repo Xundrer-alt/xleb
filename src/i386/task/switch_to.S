@@ -4,12 +4,14 @@ switch_to:
     pushl %ebx
     pushl %esi
     pushl %edi
+    pushfl
 
-    movl 20(%esp), %eax
+    movl 24(%esp), %eax
     movl %esp, (%eax)
+    
+    movl 28(%esp), %esp
 
-    movl 24(%esp), %esp
-
+    popfl
     popl %edi
     popl %esi
     popl %ebx
