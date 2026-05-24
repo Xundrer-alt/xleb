@@ -15,14 +15,14 @@ void debug_puts(const char *str) {
     }
 }
 
-static void print_num(int num) {
-    if (num < 0) {
+static void print_num(int num, int is_signed) {
+    if (is_signed && num < 0) {
         debug_putc('-');
         num = -num;
     }
 
     if (num >= 10) {
-        print_num(num / 10);
+        print_num(num / 10, 0);
     }
     debug_putc('0' + (num % 10));
 }
@@ -51,7 +51,12 @@ void debug_print(const char *fmt, ...) {
                 }
                 case 'd': {
                     int num = va_arg(args, int);
-                    print_num(num);
+                    print_num(num, 1);
+                    break;
+                }
+                case 'u': {
+                    int num = va_arg(args, unsigned int);
+                    print_num(num, 0);
                     break;
                 }
                 case 'x': {

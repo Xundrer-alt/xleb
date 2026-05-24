@@ -127,7 +127,3 @@ typedef __UINTMAX_TYPE__  uintmax_t;
 #ifndef ULLONG_MAX
 #define ULLONG_MAX         ((unsigned long long)(__LONG_LONG_MAX__) * 2 + 1)
 #endif
-
-#ifndef NULL
-#define NULL ((void *)0)
-#endif

@@ -6,7 +6,7 @@
 
 /* make sure to include all global symbols */
 #pragma once
-#include "stdint.h"
+#include "stddef.h"
 
 static __attribute__((unused))
 int memcmp(const void *s1, const void *s2, size_t n)

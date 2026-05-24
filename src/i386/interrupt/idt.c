@@ -1,6 +1,7 @@
 #include "debug.h"
 #include "interrupt/idt.h"
 #include "interrupt/init.h"
+#include "interrupt/pic.h"
 
 static struct idt_entry idt[IDT_SIZE];
 static struct idt_ptr ptr;
@@ -19,9 +20,16 @@ void interrupt_init() {
     for (int i = 0; i < 32; i++) {
         idt_set_gate(i, isr_entry_table[i], 0x08, 0x8E);
     }
-    DEBUG("ISR: hello world");
+    INFO("ISR: hello world");
+    for (int i = 0; i < 16; i++) {
+        idt_set_gate(32 + i, irq_entry_table[i], 0x08, 0x8E);
+    }
+    pic_remap(32, 40);
+    pic_mask_all();
+    INFO("IRQ: hello world");
     ptr.limit = sizeof(idt) - 1;
     ptr.base = (uint32_t)idt;
     __asm__ volatile("lidt %0" : : "m"(ptr));
-    INFO("IDT: hello world (without IRQ)");
+    __asm__ volatile("sti");
+    INFO("IDT: hello world");
 }
