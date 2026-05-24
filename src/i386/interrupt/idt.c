@@ -30,5 +30,6 @@ void interrupt_init() {
     ptr.limit = sizeof(idt) - 1;
     ptr.base = (uint32_t)idt;
     __asm__ volatile("lidt %0" : : "m"(ptr));
+    __asm__ volatile("sti");
     INFO("IDT: hello world");
 }

@@ -1,5 +1,6 @@
 #include "debug.h"
 #include "interrupt/idt.h"
+#include "interrupt/irq.h"
 #include "interrupt/pic.h"
 
 static irq_handler_t irq_table[16] = {0};

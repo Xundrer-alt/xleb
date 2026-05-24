@@ -6,3 +6,4 @@ extern uint32_t _kernel_end;
 
 void lowlevel_init();
 void* lowlevel_alloc();
+void lowlevel_free(void* ptr);

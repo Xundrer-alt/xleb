@@ -22,7 +22,5 @@ typedef struct {
     uint32_t int_no, err_code;
     uint32_t eip, cs, eflags, user_esp, user_ss;
 } __attribute__((packed)) regs_t;
-typedef void (*irq_handler_t)(regs_t *regs);
 
-void irq_register_handler(uint8_t irq, irq_handler_t handler);
-void irq_unregister_handler(uint8_t irq);
+void idt_set_gate(uint8_t num, uint32_t base, uint16_t selector, uint8_t type_attr);
