@@ -1,10 +1,78 @@
 #pragma once
 #include "stdarg.h"
 #include "string.h"
+#include "basic_drivers/uart_com1/mod.h" // TODO: delete hardcode
 
-void debug_putc(char c);
-void debug_puts(const char *str);
-void debug_print(const char *fmt, ...);
+static inline void print_num(int num, int is_signed) {
+    if (is_signed && num < 0) {
+        uart_putc('-');
+        num = -num;
+    }
+
+    if (num >= 10) {
+        print_num(num / 10, 0);
+    }
+    uart_putc('0' + (num % 10));
+}
+
+static inline void print_hex(unsigned int num) {
+    static const char hex[] = "0123456789abcdef";
+
+    for (int i = 28; i >= 0; i -= 4) {
+        uart_putc(hex[(num >> i) & 0xF]);
+    }
+}
+
+static inline void debug_print(const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    while (*fmt) {
+        if (*fmt == '%') {
+            fmt++;
+            switch (*fmt) {
+                case 's': {
+                    const char *str = va_arg(args, const char*);
+                    while (*str) {
+                        uart_putc(*str++);
+                    }
+                    break;
+                }
+                case 'd': {
+                    int num = va_arg(args, int);
+                    print_num(num, 1);
+                    break;
+                }
+                case 'u': {
+                    int num = va_arg(args, unsigned int);
+                    print_num(num, 0);
+                    break;
+                }
+                case 'x': {
+                    unsigned int num = va_arg(args, unsigned int);
+                    print_hex(num);
+                    break;
+                }
+                case 'c': {
+                    char c = (char)va_arg(args, int);
+                    uart_putc(c);
+                    break;
+                }
+                case '%': {
+                    uart_putc('%');
+                    break;
+                }
+                default:
+                    uart_putc('%');
+                    uart_putc(*fmt);
+                    break;
+            }
+        } else {
+            uart_putc(*fmt);
+        }
+        fmt++;
+    }
+    va_end(args);
+}
 
 #define __FILENAME__ (__builtin_strrchr(__FILE__, '/') ? __builtin_strrchr(__FILE__, '/') + 1 : __FILE__)
 

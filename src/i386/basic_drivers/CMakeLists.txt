@@ -1,5 +1,2 @@
-set(SRC
-    pit.c
-    uart_com1.c
-)
-target_sources(kernel PRIVATE ${SRC})
+add_subdirectory(timer)
+add_subdirectory(uart_com1)

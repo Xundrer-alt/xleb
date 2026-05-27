@@ -1,8 +1,6 @@
 #pragma once
 #include "stdint.h"
 
-#define PHYS_TO_VIRT(x) ((x) + 0xC0000000)
-#define VIRT_TO_PHYS(x) ((x) - 0xC0000000)
 #define MAX_MEMORY_REGIONS 64
 #define MAX_BLOCK_ORDER 16
 #define PAGE_SIZE 4096
