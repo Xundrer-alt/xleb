@@ -1,3 +1,4 @@
+#include "config.h"
 .section .text
 .global _entry
 _entry:
@@ -46,7 +47,11 @@ higher_half:
     movl $0, (%eax)
     invlpg (%eax)
     call gdt_load
+#ifdef ENABLE_TESTS
+    call ktest
+#else
     call kmain
+#endif
     hlt
 
 .section .data
