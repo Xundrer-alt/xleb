@@ -1,7 +1,7 @@
 #include "debug.h"
 #include "halt.h"
-#include "memory/mm.h"
-#include "memory/lowlevel.h"
+#include "mm/mm.h"
+#include "mm/lowlevel.h"
 
 memory_map_t memory_map;
 

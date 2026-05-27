@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "interrupt/init.h"
 #include "halt.h"
-#include "memory/mm.h"
+#include "mm/mm.h"
 #include "task/scheduler.h"
 
 void kmain() {

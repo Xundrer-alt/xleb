@@ -5,7 +5,7 @@ set(CMAKE_ASM_COMPILER_WORKS ON CACHE BOOL "Skip compiler test" FORCE)
 project(kernel VERSION 0.0.1 LANGUAGES C ASM)
 add_executable(kernel)
 target_include_directories(kernel PRIVATE
-    src/include
+    src
 )
 
 add_subdirectory(src)

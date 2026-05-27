@@ -1,7 +1,7 @@
 #include "debug.h"
 #include "halt.h"
-#include "memory/lowlevel.h"
-#include "memory/mm.h"
+#include "mm/lowlevel.h"
+#include "mm/mm.h"
 
 static uint32_t* stack_ptr;
 static int stack_top = -1;

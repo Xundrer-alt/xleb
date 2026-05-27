@@ -1,8 +1,8 @@
 #include "bootpr/multiboot1.h"
 #include "debug.h"
 #include "halt.h"
-#include "memory/lowlevel.h"
-#include "memory/mm.h"
+#include "mm/lowlevel.h"
+#include "mm/mm.h"
 extern uint32_t info_ptr;
 
 extern uint32_t _kernel_start;
