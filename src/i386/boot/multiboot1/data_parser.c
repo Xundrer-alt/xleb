@@ -3,6 +3,7 @@
 #include "debug.h"
 #include "halt.h"
 #include "mm/virtconv.h"
+#include "test.h"
 extern uint32_t info_ptr;
 
 void multiboot1_parse_data() {
