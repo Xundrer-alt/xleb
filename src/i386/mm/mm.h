@@ -2,10 +2,7 @@
 // Copyright (c) 2026 Xundrer-alt
 #pragma once
 #include "stdint.h"
-
 #define MAX_MEMORY_REGIONS 64
-#define MAX_BLOCK_ORDER 16
-#define PAGE_SIZE 4096
 
 typedef enum {
     MEMORY_AVAILABLE = 1,

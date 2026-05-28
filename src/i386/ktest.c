@@ -5,6 +5,7 @@
 #include "halt.h"
 #include "interrupt/init.h"
 #include "mm/mm.h"
+#include "mm/ppage/mod.h"
 #include "stdint.h"
 #include "task/scheduler/mod.h"
 #include "test.h"
@@ -44,9 +45,19 @@ void ktest() {
     test_success();
     INFO("Not test: Boot protocol setup");
     get_bootloader_protocol();
-    INFO("Not test: Memory Management");
+    INFO("Test 2: Memory Management");
     mm_init();
-    INFO("Test 2: Timer");
+    INFO("Allocating some page...");
+    uint32_t *num = ppage_alloc(0);
+    INFO("Write 31 into *num...");
+    *num = 31;
+    INFO("Read *num: %d", *num);
+    if (*num == 31) {
+        test_success();
+    } else {
+        test_failed();
+    }
+    INFO("Test 3: Timer");
     timer_init();
     uint32_t ftm = timer_get_ticks();
     INFO("First time measurement: %d, wait 10000000 CPU ticks", ftm);
@@ -60,7 +71,7 @@ void ktest() {
         INFO("Timer is working");
         test_success();
     }
-    INFO("Test 3: Scheduler");
+    INFO("Test 4: Scheduler");
     scheduler_init();
     INFO("Add, start test threads and wait 10 timer ticks");
     scheduler_add_thread(test_th);
