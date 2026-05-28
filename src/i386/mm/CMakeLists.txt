@@ -3,3 +3,4 @@ set(SRC
     init.c
 )
 target_sources(kernel PRIVATE ${SRC})
+add_subdirectory(ppage)

@@ -1,0 +1,16 @@
+#include "debug.h"
+#include "mm/mm.h"
+#include "mm/ppage/mod.h"
+
+memory_map_t memory_map;
+
+void ppage_init() {
+    for (int i = 0; i < memory_map.region_count; i++) {
+        memory_region_t *region = &memory_map.regions[i];
+        if (region->type == MEMORY_AVAILABLE) {
+            uint32_t start = region->start;
+            uint32_t pages = region->size / PAGE_SIZE;
+            DEBUG("start: 0x%x, size: %d pages", start, pages);
+        }
+    }
+}
