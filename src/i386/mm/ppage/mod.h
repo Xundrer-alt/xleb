@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0
 // Copyright (c) 2026 Xundrer-alt
 #pragma once
+#include "stdint.h"
 #include "list.h"
 #define MAX_ORDER 16
 #define PAGE_SIZE 4096
@@ -11,7 +12,7 @@ enum page_flag {
 };
 typedef struct free_block {
     struct free_block *next;
-    unsigned int order;
+    uint32_t order;
 } free_block_t;
 struct page {
     struct list_head lru;

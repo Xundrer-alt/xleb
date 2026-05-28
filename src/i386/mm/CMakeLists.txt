@@ -4,3 +4,4 @@ set(SRC
 )
 target_sources(kernel PRIVATE ${SRC})
 add_subdirectory(ppage)
+add_subdirectory(vmm)

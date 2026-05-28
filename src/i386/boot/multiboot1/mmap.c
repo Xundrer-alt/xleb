@@ -61,6 +61,7 @@ void process_mmap(multiboot_info_t *mbi) {
         INFO("  - [0x%x - 0x%x] %s (%u KB)",
             region->start, region->end, type_str, region->size / 1024);
         memory_map.region_count++;
+        memory_map.total_memory += region->size;
         mmap = (multiboot_memory_map_t *)((uint32_t)mmap + mmap->size + sizeof(mmap->size));
     }
     if (memory_map.region_count == 0) {

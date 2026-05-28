@@ -14,7 +14,7 @@ void ppage_init() {
         memory_region_t *region = &memory_map.regions[i];
         if (region->type == MEMORY_AVAILABLE) {
             uint32_t start = region->start;
-            uint32_t page_num = (0x300000 - start) / PAGE_SIZE;
+            uint32_t page_num = region->size / PAGE_SIZE;
             ppage_add_region(start, page_num);
         }
     }

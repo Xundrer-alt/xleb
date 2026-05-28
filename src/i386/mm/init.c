@@ -4,10 +4,13 @@
 #include "halt.h"
 #include "mm/mm.h"
 #include "mm/lowlevel.h"
+#include "mm/lowlevel.h"
 #include "mm/ppage/mod.h"
+#include "mm/vmm/lmem.h"
 
 void mm_init() {
     INFO("memory manager: hello world");
+    map_lmem();
     lowlevel_init(); // TODO: replace
     ppage_init();
 }

@@ -10,7 +10,7 @@ _entry:
     movl %eax, %ebp
     movl %ebx, %esi
 
-    movl $boot_page_directory, %edi
+    movl $kernel_page_directory, %edi
     subl $0xC0000000, %edi
     movl %edi, %cr3
 
@@ -67,8 +67,9 @@ info_ptr:
     .long 0
 
 .section .bss
+.global kernel_page_directory
 .align 4096
-boot_page_directory:
+kernel_page_directory:
     .skip 4096
 
 boot_page_table:
