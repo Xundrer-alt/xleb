@@ -56,7 +56,6 @@
                   -DCMAKE_ASM_FLAGS="$CFLAGS" \
                   -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS" \
                   -DCMAKE_SYSTEM_NAME="Generic" \
-                  -DCMAKE_SYSTEM_PROCESSOR="$1" \
                   -DARCH="$ARCH"
               make -j$(nproc)
               cd ..
@@ -79,7 +78,6 @@
                   -DCMAKE_ASM_FLAGS="$CFLAGS" \
                   -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS" \
                   -DCMAKE_SYSTEM_NAME="Generic" \
-                  -DCMAKE_SYSTEM_PROCESSOR="$1" \
                   -DARCH="$ARCH" \
                   -DENABLE_TESTS=ON
               make -j$(nproc)
