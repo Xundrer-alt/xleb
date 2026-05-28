@@ -1,5 +1,5 @@
 {
-  description = "Kernel Builder (unnamed yet)";
+  description = "Xleb Kernel Builder";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -14,7 +14,7 @@
       clang-tools = pkgs.llvmPackages_20.clang-tools;
     in {
       devShells.${system}.default = pkgs.mkShell {
-        name = "rboxmgr-shell";
+        name = "xleb-shell";
         buildInputs = [
           clang
           clang-tools
@@ -25,7 +25,7 @@
         ];
 
         shellHook = ''
-          export PS1="\n\[\033[1;32m\][kernel] \[\033[0m\]\u@\h:\w\n\$ "
+          export PS1="\n\[\033[1;32m\][xleb] \[\033[0m\]\u@\h:\w\n\$ "
           set_target() {
               case "$1" in
                   i386)

@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 4.1)
 set(CMAKE_C_COMPILER_WORKS ON CACHE BOOL "Skip compiler test" FORCE)
 set(CMAKE_ASM_COMPILER_WORKS ON CACHE BOOL "Skip compiler test" FORCE)
 
-project(kernel VERSION 0.0.1 LANGUAGES C ASM)
+project(xleb VERSION 0.0.1 LANGUAGES C ASM)
 add_executable(kernel)
 configure_file(
     ${CMAKE_SOURCE_DIR}/src/config.h.in

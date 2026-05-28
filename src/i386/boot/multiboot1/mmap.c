@@ -3,6 +3,7 @@
 #include "boot/multiboot1/info.h"
 #include "boot/multiboot1/mod.h"
 #include "debug.h"
+#include "halt.h"
 #include "mm/lowlevel.h"
 #include "mm/mm.h"
 #include "mm/virtconv.h"
@@ -61,6 +62,10 @@ void process_mmap(multiboot_info_t *mbi) {
             region->start, region->end, type_str, region->size / 1024);
         memory_map.region_count++;
         mmap = (multiboot_memory_map_t *)((uint32_t)mmap + mmap->size + sizeof(mmap->size));
+    }
+    if (memory_map.region_count == 0) {
+        ERROR("memory_map is empty!");
+        halt();
     }
     INFO("- total available memory: %d MB", memory_map.available_memory / (1024 * 1024));
 }

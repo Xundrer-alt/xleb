@@ -3,7 +3,7 @@
 #include "debug.h"
 #include "mm/mm.h"
 #include "mm/ppage/mod.h"
-
+#include "stdint.h"
 memory_map_t memory_map;
 
 void ppage_init() {
@@ -11,8 +11,8 @@ void ppage_init() {
         memory_region_t *region = &memory_map.regions[i];
         if (region->type == MEMORY_AVAILABLE) {
             uint32_t start = region->start;
-            uint32_t pages = region->size / PAGE_SIZE;
-            DEBUG("start: 0x%x, size: %d pages", start, pages);
+            uint32_t page_num = region->size / PAGE_SIZE;
+            ppage_add_region(start, page_num);
         }
     }
 }
