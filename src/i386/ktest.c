@@ -49,14 +49,16 @@ void ktest() {
     mm_init();
     INFO("Allocating some page...");
     uint32_t *num = ppage_alloc(0);
-    INFO("Write 31 into *num...");
+    INFO("Writing 31 into *num...");
     *num = 31;
-    INFO("Read *num: %d", *num);
+    INFO("Reading *num: %d", *num);
     if (*num == 31) {
         test_success();
     } else {
         test_failed();
     }
+    INFO("Freeing *num");
+    ppage_free((void*)num, 0);
     INFO("Test 3: Timer");
     timer_init();
     uint32_t ftm = timer_get_ticks();

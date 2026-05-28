@@ -22,4 +22,5 @@ extern free_block_t *free_lists[MAX_ORDER + 1];
 
 void ppage_add_region(uint32_t start, uint32_t page_num);
 void* ppage_alloc(uint32_t order);
+void ppage_free(void *ptr, uint32_t order);
 void ppage_init();
