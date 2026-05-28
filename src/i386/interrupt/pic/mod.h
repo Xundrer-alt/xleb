@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0
+// Copyright (c) 2026 Xundrer-alt
 #pragma once
 #define PIC1_COMMAND 0x20
 #define PIC1_DATA 0x21

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0
+// Copyright (c) 2026 Xundrer-alt
 #include "mm/lowlevel.h"
 #include "stddef.h"
 #include "task/thread/mod.h"

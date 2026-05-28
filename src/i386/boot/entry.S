@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0
+// Copyright (c) 2026 Xundrer-alt
 #include "config.h"
 .section .text
 .global _entry
