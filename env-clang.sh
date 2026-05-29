@@ -65,7 +65,7 @@ bd() {
     qemu-system-$ARCH -kernel build/kernel -serial stdio -s -S
 }
 cl() {
-    rm -rf build*
+    rm -rf build* rust/target
     echo "Removed all build directories"
 }
 cbr() {
