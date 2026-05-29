@@ -7,11 +7,18 @@
 #include "stdint.h"
 
 void* kmalloc(uint32_t size) {
+    if (!heap_start) {
+        ERROR("kmalloc: heap not initialized!");
+        return NULL;
+    }
     if (size == 0) return NULL;
+    
+    uint32_t original_size = size;
     if (size & 7) {
         size += 8 - (size & 7);
     }
     heap_block_t *current = heap_start;
+    int block_num = 0;
     while (current) {
         if (!current->used && current->size >= size) {
             if (current->size > size + sizeof(heap_block_t) + 32) {
@@ -31,14 +38,17 @@ void* kmalloc(uint32_t size) {
                 heap_stats.free_blocks++;
                 heap_stats.free_size += remaining;
             }
+            
             current->used = 1;
             heap_stats.used_size += current->size;
             heap_stats.free_size -= current->size;
             heap_stats.free_blocks--;
-            return (void*)((uint32_t)current + sizeof(heap_block_t));
+            void* result = (void*)((uint32_t)current + sizeof(heap_block_t));
+            return result;
         }
         current = current->next;
     }
+    
     if (expand_heap() == 0) {
         return kmalloc(size);
     }

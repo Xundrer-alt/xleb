@@ -7,6 +7,7 @@
 #include "mm/virtconv.h"
 #include "stddef.h"
 #include "stdint.h"
+#include "string.h"
 
 heap_block_t *heap_start = NULL;
 uint32_t heap_brk = 0;
@@ -50,6 +51,7 @@ int expand_heap() {
 }
 
 void kheap_init() {
+    memset(&heap_stats, 0, sizeof(heap_stats_t));
     int pages_allocated = 0;
     for (int i = 0; i < KHEAP_INITIAL_PAGES; i++) {
         if (expand_heap() != 0) {

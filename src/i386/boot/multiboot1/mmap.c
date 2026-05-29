@@ -4,7 +4,6 @@
 #include "boot/multiboot1/mod.h"
 #include "debug.h"
 #include "halt.h"
-#include "mm/lowlevel.h"
 #include "mm/mod.h"
 #include "mm/virtconv.h"
 
@@ -16,8 +15,6 @@ void process_mmap(multiboot_info_t *mbi) {
     INFO("- memory map (%u bytes):", mbi->mmap_length);
     multiboot_memory_map_t *mmap = (multiboot_memory_map_t *)PHYS_TO_VIRT(mbi->mmap_addr);
     uint32_t mmap_end = PHYS_TO_VIRT(mbi->mmap_addr) + mbi->mmap_length;
-    INFO("  - [0x%x - 0x%x] lowlevel (%u KB)",
-            VIRT_TO_PHYS((uint32_t)&_kernel_end), LOWLEVEL_LIMIT - 1, ((uint32_t)LOWLEVEL_LIMIT - 1 - VIRT_TO_PHYS((uint32_t)&_kernel_end)) / 1024);
     while ((uint32_t)mmap < mmap_end && memory_map.region_count < MAX_MEMORY_REGIONS) {
         memory_region_t *region = &memory_map.regions[memory_map.region_count];
         region->start = (uint32_t)mmap->addr;
@@ -26,8 +23,8 @@ void process_mmap(multiboot_info_t *mbi) {
         const char *type_str = "unknown";
         switch (mmap->type) {
             case MULTIBOOT_MEMORY_AVAILABLE:
-                if (region->end > LOWLEVEL_LIMIT) {
-                    region->start = (region->start > LOWLEVEL_LIMIT) ? region->start : LOWLEVEL_LIMIT;
+                if (region->end > VIRT_TO_PHYS((uint32_t)&_kernel_end)) {
+                    region->start = (region->start > VIRT_TO_PHYS((uint32_t)&_kernel_end)) ? region->start : VIRT_TO_PHYS((uint32_t)&_kernel_end);
                     region->size = region->end - region->start;
                     region->type = MEMORY_AVAILABLE;
                     memory_map.available_memory += region->size;
