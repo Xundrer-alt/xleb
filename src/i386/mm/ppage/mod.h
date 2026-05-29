@@ -10,16 +10,18 @@ enum page_flag {
     PAGE_USED,
     PAGE_RESERVED
 };
-typedef struct free_block {
-    struct free_block *next;
-    uint32_t order;
-} free_block_t;
+typedef struct free_area {
+    struct list_head free_list;
+    uint32_t nr_free;
+} free_area_t;
 struct page {
-    struct list_head lru;
+    struct list_head list;
     uint32_t order;
     uint32_t flags;
 };
-extern free_block_t *free_lists[MAX_ORDER + 1];
+extern free_area_t free_areas[MAX_ORDER + 1];
+extern struct page *page_array;
+extern uint32_t total_pages;
 
 void ppage_add_region(uint32_t start, uint32_t page_num);
 void* ppage_alloc(uint32_t order);

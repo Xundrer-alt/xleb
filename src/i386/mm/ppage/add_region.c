@@ -5,34 +5,41 @@
 #include "mm/ppage/mod.h"
 #include "stdint.h"
 
-static void add_to_free_list(uint32_t start, unsigned int order) {
-    free_block_t *block = (free_block_t*)PHYS_TO_VIRT(start); // PHYS_TO_VIRT make address virtual, not physical (so "ppage" isn't ppage)
-    block->order = order;
-    block->next = free_lists[order];
-    free_lists[order] = block;
+static void add_block_to_free_list(uint32_t start_page, uint32_t order) {
+    list_add(&page_array[start_page].list, &free_areas[order].free_list);
+    free_areas[order].nr_free++;
+}
+static uint32_t get_max_order(uint32_t page_idx, uint32_t max_pages) {
+    uint32_t order = 0;
+    uint32_t block_size = 1;
+    while (order < MAX_ORDER) {
+        uint32_t next_size = block_size << 1;
+        if (next_size > max_pages) break;
+        if ((page_idx & (next_size - 1)) != 0) break;
+        order++;
+        block_size = next_size;
+    }
+    return order;
+}
+static void init_block_pages(uint32_t start_page, uint32_t block_size, uint32_t order) {
+    for (uint32_t i = 0; i < block_size; i++) {
+        uint32_t page_idx = start_page + i;
+        page_array[page_idx].flags = PAGE_FREE;
+        page_array[page_idx].order = order;
+        INIT_LIST_HEAD(&page_array[page_idx].list);
+    }
 }
 
-void ppage_add_region(uint32_t start, uint32_t page_num) {
+void ppage_add_region(uint32_t start_paddr, uint32_t page_num) {
+    uint32_t start_page = start_paddr / PAGE_SIZE;
     uint32_t remaining = page_num;
-    uint32_t current = start;
+    uint32_t current_page = start_page;
     while (remaining > 0) {
-        uint32_t order = 0;
-        uint32_t block_size = 1;
-        while (block_size <= remaining && order < MAX_ORDER) {
-            uint32_t block_bytes = block_size * PAGE_SIZE;
-            if ((current & (block_bytes - 1)) == 0) {
-                order++;
-                block_size <<= 1;
-            } else {
-                break;
-            }
-        }
-        if (order > 0) {
-            order--;
-            block_size >>= 1;
-        }
-        add_to_free_list(current, order);
-        current += block_size * PAGE_SIZE;
+        uint32_t order = get_max_order(current_page, remaining);
+        uint32_t block_size = 1 << order;
+        init_block_pages(current_page, block_size, order);
+        add_block_to_free_list(current_page, order);
+        current_page += block_size;
         remaining -= block_size;
     }
 }

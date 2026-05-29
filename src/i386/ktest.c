@@ -6,6 +6,7 @@
 #include "interrupt/init.h"
 #include "mm/mm.h"
 #include "mm/ppage/mod.h"
+#include "mm/virtconv.h"
 #include "stdint.h"
 #include "task/scheduler/mod.h"
 #include "test.h"
@@ -48,7 +49,7 @@ void ktest() {
     INFO("Test 2: Memory Management");
     mm_init();
     INFO("Allocating some page...");
-    uint32_t *num = ppage_alloc(0);
+    uint32_t *num = PHYS_TO_VIRT(ppage_alloc(0));
     INFO("Writing 31 into *num...");
     *num = 31;
     INFO("Reading *num: %d", *num);
@@ -58,7 +59,7 @@ void ktest() {
         test_failed();
     }
     INFO("Freeing *num");
-    ppage_free((void*)num, 0);
+    ppage_free((void*)VIRT_TO_PHYS((uint32_t)num), 0);
     INFO("Test 3: Timer");
     timer_init();
     uint32_t ftm = timer_get_ticks();

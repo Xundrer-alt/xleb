@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (c) 2026 Xundrer-alt
-
 cmake_minimum_required(VERSION 4.1)
 set(CMAKE_C_COMPILER_WORKS ON CACHE BOOL "Skip compiler test" FORCE)
 set(CMAKE_ASM_COMPILER_WORKS ON CACHE BOOL "Skip compiler test" FORCE)
