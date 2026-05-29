@@ -1,0 +1,4 @@
+language = "C"
+no_includes = true
+sys_includes = ["stdint.h", "stdbool.h"]
+includes = []

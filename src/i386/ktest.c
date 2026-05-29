@@ -10,6 +10,7 @@
 #include "stdint.h"
 #include "task/scheduler/mod.h"
 #include "test.h"
+#include "rust_ffi.h"
 
 uint32_t tests_success = 0;
 uint32_t tests_failed = 0;
@@ -94,6 +95,14 @@ void ktest() {
         test_failed();
     } else {
         WARN("Invalid th_flag");
+        test_failed();
+    }
+    INFO("Test 5: Rust FFI");
+    int result = rust_add(2, 3);
+    INFO("rust_add(2, 3) = %d", result);
+    if (result == 5) {
+        test_success();
+    } else {
         test_failed();
     }
     INFO("End testing");

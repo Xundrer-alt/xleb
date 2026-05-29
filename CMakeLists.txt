@@ -22,6 +22,32 @@ if(ENABLE_TESTS)
 endif()
 add_subdirectory(src)
 
+# rust part
+set(RUST_DIR ${CMAKE_SOURCE_DIR}/rust)
+set(RUST_LIB ${RUST_DIR}/target/i686-unknown-linux-gnu/release/librust.rlib)
+set(RUST_HEADER ${CMAKE_BINARY_DIR}/rust_ffi.h)
+add_custom_command(
+    OUTPUT ${RUST_HEADER}
+    COMMAND cbindgen --lang c --output ${RUST_HEADER} ${RUST_DIR}
+    WORKING_DIRECTORY ${RUST_DIR}
+    COMMENT "Generating C headers from Rust"
+    DEPENDS ${RUST_DIR}/src/lib.rs
+)
+add_custom_target(rust_headers ALL
+    DEPENDS ${RUST_HEADER}
+)
+add_custom_target(rust_build ALL
+    COMMAND cargo build --release
+    WORKING_DIRECTORY ${RUST_DIR}
+    COMMENT "Building Rust library"
+    BYPRODUCTS ${RUST_LIB}
+)
+add_dependencies(rust_build rust_headers)
+add_dependencies(kernel rust_build)
+target_link_libraries(kernel
+    ${RUST_LIB}
+)
+
 target_link_options(kernel PRIVATE
     -nostdlib
     -static

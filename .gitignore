@@ -1,2 +1,4 @@
 build*
 flake.lock
+rust/target
+rust/Cargo.lock
