@@ -24,7 +24,7 @@ add_subdirectory(src)
 
 # rust part
 set(RUST_DIR ${CMAKE_SOURCE_DIR}/rust)
-set(RUST_LIB ${RUST_DIR}/target/i686-unknown-linux-gnu/release/librust.rlib)
+set(RUST_LIB ${RUST_DIR}/target/i686-unknown-linux-gnu/release/librust.a)
 set(RUST_HEADER ${CMAKE_BINARY_DIR}/rust_ffi.h)
 add_custom_command(
     OUTPUT ${RUST_HEADER}

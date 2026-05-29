@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0
 // Copyright (c) 2026 Xundrer-alt
 use core::arch::asm;
+use crate::debug;
 pub struct Pic;
 
 const PIC1_COMMAND: u16 = 0x20;
@@ -49,7 +50,7 @@ impl Pic {
             Self::outb(PIC2_DATA, ICW4_8086);
             Self::outb(PIC1_DATA, mask1);
             Self::outb(PIC2_DATA, mask2);
-            //DEBUG("PIC: remapped to 0x%x (master) and 0x%x (slave)", offset1, offset2);
+            debug!("PIC: remapped to 0x{} (master) and 0x{} (slave)", offset1, offset2);
         }
     }
     pub fn mask_all() {
@@ -68,7 +69,7 @@ impl Pic {
                 Self::outb(PIC2_DATA, mask & !(1 << (irq - 8)));
             }
         }
-        //DEBUG("PIC: unmasked IRQ%d", irq);
+        debug!("PIC: unmasked IRQ{}", irq);
     }
     pub fn mask_irq(irq: u8) {
         unsafe {
@@ -80,7 +81,7 @@ impl Pic {
                 Self::outb(PIC2_DATA, mask | (1 << (irq - 8)));
             }
         }
-        //DEBUG("PIC: masked IRQ%d", irq);
+        debug!("PIC: masked IRQ{}", irq);
     }
     pub fn send_eoi(irq: u8) {
         unsafe {
