@@ -6,6 +6,7 @@
 #include "halt.h"
 #include "mm/mod.h"
 #include "task/scheduler/mod.h"
+#include "rust_ffi.h"
 extern void get_bootloader_protocol();
 
 void kmain() {

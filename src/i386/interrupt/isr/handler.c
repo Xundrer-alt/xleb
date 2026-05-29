@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Xundrer-alt
 #include "debug.h"
 #include "interrupt/idt/mod.h"
-#include "halt.h"
+#include "rust_ffi.h"
 #include "test.h"
 
 void isr_handler(regs_t *r) {

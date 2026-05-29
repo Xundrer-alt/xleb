@@ -2,7 +2,6 @@
 // Copyright (c) 2026 Xundrer-alt
 #include "basic_drivers/timer/mod.h"
 #include "debug.h"
-#include "halt.h"
 #include "interrupt/init.h"
 #include "mm/kheap/mod.h"
 #include "mm/mod.h"
@@ -95,14 +94,6 @@ void ktest() {
         test_failed();
     } else {
         WARN("Invalid th_flag");
-        test_failed();
-    }
-    INFO("Test 5: Rust FFI");
-    int result = rust_add(2, 3);
-    INFO("rust_add(2, 3) = %d", result);
-    if (result == 5) {
-        test_success();
-    } else {
         test_failed();
     }
     INFO("End testing");

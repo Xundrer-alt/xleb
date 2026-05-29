@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0
 // Copyright (c) 2026 Xundrer-alt
 #include "debug.h"
-#include "halt.h"
+#include "rust_ffi.h"
 #include "mm/kheap/mod.h"
 #include "mm/ppage/mod.h"
 #include "mm/virtconv.h"

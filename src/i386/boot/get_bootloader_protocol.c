@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Xundrer-alt
 #include "debug.h"
 #include "stdint.h"
-#include "halt.h"
+#include "rust_ffi.h"
 extern uint32_t boot_magic;
 extern void multiboot1_parse_data();
 

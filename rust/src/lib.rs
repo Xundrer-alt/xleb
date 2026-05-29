@@ -1,6 +1,8 @@
 #![no_std]
 
 use core::panic::PanicInfo;
+pub mod arch;
+use crate::arch::Arch;
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
@@ -8,11 +10,6 @@ fn panic(_info: &PanicInfo) -> ! {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn rust_hello() -> i32 {
-    return 42;
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn rust_add(a: i32, b: i32) -> i32 {
-    return a + b;
+pub extern "C" fn halt() -> ! {
+    arch::CurrentArch::halt()
 }

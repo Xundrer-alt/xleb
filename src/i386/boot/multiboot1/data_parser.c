@@ -3,7 +3,7 @@
 #include "boot/multiboot1/info.h"
 #include "boot/multiboot1/mod.h"
 #include "debug.h"
-#include "halt.h"
+#include "rust_ffi.h"
 #include "mm/virtconv.h"
 #include "test.h"
 extern uint32_t info_ptr;
