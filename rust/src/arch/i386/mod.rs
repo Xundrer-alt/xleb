@@ -1,5 +1,10 @@
+// SPDX-License-Identifier: GPL-2.0
+// Copyright (c) 2026 Xundrer-alt
 use core::arch::asm;
 use super::Arch;
+
+pub mod interrupt;
+pub use interrupt::InterruptController;
 
 pub struct I386Arch;
 impl Arch for I386Arch {
@@ -9,5 +14,8 @@ impl Arch for I386Arch {
                 asm!("hlt", options(nomem, nostack, preserves_flags));
             }
         }
+    }
+    fn interrupt_init() {
+        InterruptController::init();
     }
 }
