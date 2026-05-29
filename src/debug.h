@@ -1,7 +1,7 @@
 #pragma once
 #include "stdarg.h"
 #include "string.h"
-#include "basic_drivers/uart_com1/mod.h" // TODO: delete hardcode
+#include "rust_ffi.h"
 
 static inline void print_num(int num, int is_signed) {
     if (is_signed && num < 0) {

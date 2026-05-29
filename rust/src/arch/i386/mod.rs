@@ -4,6 +4,7 @@ use core::arch::asm;
 use super::Arch;
 
 pub mod interrupt;
+pub mod uart;
 pub use interrupt::InterruptController;
 
 pub struct I386Arch;
