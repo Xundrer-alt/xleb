@@ -3,7 +3,6 @@
 #include "basic_drivers/timer/mod.h"
 #include "debug.h"
 #include "interrupt/init.h"
-#include "halt.h"
 #include "mm/mod.h"
 #include "task/scheduler/mod.h"
 #include "rust_ffi.h"
