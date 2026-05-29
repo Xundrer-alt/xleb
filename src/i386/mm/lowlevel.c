@@ -4,7 +4,7 @@
 #include "halt.h"
 #include "mm/lowlevel.h"
 #include "mm/ppage/mod.h"
-#include "mm/mm.h"
+#include "mm/mod.h"
 #include "mm/virtconv.h"
 
 static uint32_t* stack_ptr;

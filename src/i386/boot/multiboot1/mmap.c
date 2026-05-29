@@ -5,7 +5,7 @@
 #include "debug.h"
 #include "halt.h"
 #include "mm/lowlevel.h"
-#include "mm/mm.h"
+#include "mm/mod.h"
 #include "mm/virtconv.h"
 
 extern uint32_t _kernel_start;

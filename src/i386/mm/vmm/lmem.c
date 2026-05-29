@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Xundrer-alt
 #include "debug.h"
 #include "halt.h"
-#include "mm/mm.h"
+#include "mm/mod.h"
 #include "mm/ppage/mod.h"
 #include "mm/virtconv.h"
 #include "mm/vmm/lmem.h"

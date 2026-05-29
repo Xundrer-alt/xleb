@@ -2,7 +2,8 @@
 // Copyright (c) 2026 Xundrer-alt
 #include "debug.h"
 #include "halt.h"
-#include "mm/mm.h"
+#include "mm/kheap/mod.h"
+#include "mm/mod.h"
 #include "mm/lowlevel.h"
 #include "mm/lowlevel.h"
 #include "mm/ppage/mod.h"
@@ -13,4 +14,5 @@ void mm_init() {
     map_lmem();
     lowlevel_init(); // TODO: replace
     ppage_init();
+    kheap_init();
 }

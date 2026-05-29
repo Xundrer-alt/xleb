@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0
 // Copyright (c) 2026 Xundrer-alt
 #pragma once
-#include "mm/mm.h"
+#include "mm/mod.h"
 #include "stdint.h"
 #define LOWLEVEL_LIMIT (uint32_t)0x200000
 extern uint32_t _kernel_end;
