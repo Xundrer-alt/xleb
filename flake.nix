@@ -50,7 +50,7 @@
                     echo "Error: target not set. Use 'set_target <arch>' first."
                     return 1
                 fi
-                cargo build
+                cargo build --target $TARGET
             }
             br() {
               b
@@ -61,15 +61,15 @@
                     echo "Error: target not set. Use 'set_target <arch>' first."
                     return 1
                 fi
-                cargo build
+                cargo build --target $TARGET
             }
             btr() {
               bt
-              qemu-system-$ARCH -kernel target/i686-unknown-linux-gnu/debug/xleb -serial stdio
+              qemu-system-$ARCH -kernel target/$TARGET/debug/xleb -serial stdio
             }
             bd() {
               b
-              qemu-system-$ARCH -kernel target/i686-unknown-linux-gnu/debug/xleb -serial stdio -s -S
+              qemu-system-$ARCH -kernel target/$TARGET/debug/xleb -serial stdio -s -S
             }
             cl() {
               rm -rf target
