@@ -11,7 +11,7 @@
 thread_t* thread_create(void (*entry)()) {
     thread_t* thread = (thread_t*)kmalloc(sizeof(thread_t));
     if (!thread) return NULL;
-    void* stack = (void*)PHYS_TO_VIRT((uint32_t)ppage_alloc(0));
+    void* stack = (void*)PHYS_TO_VIRT((uint32_t)ppage_alloc(0, PPAGE_LOWLEVEL_FLAG));
     if (!stack) {
         kfree(thread);
         return NULL;

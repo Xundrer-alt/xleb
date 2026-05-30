@@ -32,8 +32,7 @@ static void split_block(uint32_t start_page, uint32_t start_order, uint32_t targ
     }
 }
 
-
-void* ppage_alloc(uint32_t order) {
+void* ppage_alloc(uint32_t order, uint32_t flags) {
     if (order > MAX_ORDER) {
         ERROR("order %d > MAX_ORDER %d", order, MAX_ORDER);
         return NULL;
@@ -43,6 +42,11 @@ void* ppage_alloc(uint32_t order) {
         if (!page) continue;
         uint32_t start_page = page - page_array;
         uint32_t block_paddr = start_page * PAGE_SIZE;
+        if ((flags & PPAGE_LOWLEVEL_FLAG) && block_paddr >= LOWLEVEL_MAX) {
+            list_add(&page->list, &free_areas[cur_order].free_list);
+            free_areas[cur_order].nr_free++;
+            continue;
+        }
         split_block(start_page, cur_order, order);
         mark_pages_used(start_page, 1 << order);
         return (void*)block_paddr;

@@ -23,7 +23,7 @@ void multiboot1_parse_data() {
     if (mbi->flags & MULTIBOOT_INFO_CMDLINE && mbi->cmdline) {
         process_cmdline((char *)PHYS_TO_VIRT(mbi->cmdline));
     }
-    process_mmap(mbi);
     process_modules(mbi);
+    process_mmap(mbi);
     INFO("END MULTIBOOT1 INFO PARSING");
 }

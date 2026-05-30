@@ -14,7 +14,7 @@ uint32_t heap_brk = 0;
 heap_stats_t heap_stats = {0};
 
 int expand_heap() {
-    uint32_t ppage = (uint32_t)ppage_alloc(0);
+    uint32_t ppage = (uint32_t)ppage_alloc(0, PPAGE_LOWLEVEL_FLAG);
     if (!ppage) {
         ERROR("kheap: failed to allocate physical page");
         return -1;
