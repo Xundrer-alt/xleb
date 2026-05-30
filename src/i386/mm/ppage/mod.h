@@ -6,7 +6,6 @@
 #define MAX_ORDER 16
 #define PAGE_SIZE 4096
 #define PPAGE_LOWLEVEL_FLAG 0x2
-#define LOWLEVEL_MAX 0x1FFFFFF
 enum page_flag {
     PAGE_FREE,
     PAGE_USED,

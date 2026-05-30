@@ -20,10 +20,9 @@ typedef struct heap_stats {
 } heap_stats_t;
 
 extern heap_block_t *heap_start;
-extern uint32_t heap_brk;
 extern heap_stats_t heap_stats;
 
-int expand_heap();
+int expand_heap(int is_initial);
 void kfree(void *ptr);
 void kheap_init();
 void* kmalloc(uint32_t size);

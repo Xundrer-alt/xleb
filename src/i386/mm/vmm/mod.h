@@ -12,4 +12,5 @@
 #define PAGE_PAT      0x080
 #define PAGE_GLOBAL   0x100
 
-void vmm_map_page(uint32_t *page_directory, uint32_t virt_addr, uint32_t phys_addr, uint32_t flags);
+void vmm_map(uint32_t *page_directory, uint32_t virt_addr, uint32_t phys_addr, uint32_t flags);
+void* vpage_alloc(uint32_t *page_directory, uint32_t vaddr, uint32_t order, uint32_t flags);

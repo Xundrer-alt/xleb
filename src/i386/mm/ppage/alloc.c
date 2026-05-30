@@ -3,6 +3,7 @@
 #include "debug.h"
 #include "mm/virtconv.h"
 #include "mm/ppage/mod.h"
+#include "mm/vmm/lmem.h"
 #include "stdint.h"
 
 static struct page* get_free_block(uint32_t order) {
@@ -30,19 +31,18 @@ static void split_block(uint32_t start_page, uint32_t start_order, uint32_t targ
         list_add(&buddy->list, &free_areas[current_order].free_list);
         free_areas[current_order].nr_free++;
     }
+    page_array[start_page].order = target_order;
 }
 
 void* ppage_alloc(uint32_t order, uint32_t flags) {
-    if (order > MAX_ORDER) {
-        ERROR("order %d > MAX_ORDER %d", order, MAX_ORDER);
-        return NULL;
-    }
     for (uint32_t cur_order = order; cur_order <= MAX_ORDER; cur_order++) {
         struct page *page = get_free_block(cur_order);
-        if (!page) continue;
+        if (!page) {
+            continue;
+        }
         uint32_t start_page = page - page_array;
         uint32_t block_paddr = start_page * PAGE_SIZE;
-        if ((flags & PPAGE_LOWLEVEL_FLAG) && block_paddr >= LOWLEVEL_MAX) {
+        if ((flags & PPAGE_LOWLEVEL_FLAG) && block_paddr >= LMEM_MAX_SIZE) {
             list_add(&page->list, &free_areas[cur_order].free_list);
             free_areas[cur_order].nr_free++;
             continue;

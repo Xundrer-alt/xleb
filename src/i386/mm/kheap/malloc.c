@@ -12,7 +12,6 @@ void* kmalloc(uint32_t size) {
         return NULL;
     }
     if (size == 0) return NULL;
-    
     uint32_t original_size = size;
     if (size & 7) {
         size += 8 - (size & 7);
@@ -49,7 +48,7 @@ void* kmalloc(uint32_t size) {
         current = current->next;
     }
     
-    if (expand_heap() == 0) {
+    if (expand_heap(0) == 0) {
         return kmalloc(size);
     }
     ERROR("kmalloc: no free block for %u bytes", size);
