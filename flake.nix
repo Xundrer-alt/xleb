@@ -25,15 +25,9 @@
         devShells.default = pkgs.mkShell {
           name = "xleb-shell";
           buildInputs = with pkgs; [
-            clang
-            clang-tools
-            lld
-            cmake
-            lldb
             qemu
             rust-nightly
             cargo
-            rust-cbindgen
           ];
 
           shellHook = ''
@@ -41,8 +35,7 @@
             set_target() {
                 case "$1" in
                     i386)
-                        export TARGET="i386-unknown-none"
-                        export ARCH_FLAGS="--target=$TARGET -march=i386 -mno-sse -mno-mmx"
+                        export TARGET="i686-unknown-linux-gnu"
                         ;;
                     *)
                         echo "Unknown target. Supported: i386"
@@ -50,8 +43,6 @@
                         ;;
                 esac
                 export ARCH="$1"
-                export CFLAGS="$ARCH_FLAGS -ffreestanding -nostdlib -Wno-unused-command-line-argument"
-                export LDFLAGS="-fuse-ld=lld $ARCH_FLAGS -nostdlib"
             }
 
             b() {
@@ -59,52 +50,29 @@
                     echo "Error: target not set. Use 'set_target <arch>' first."
                     return 1
                 fi
-                mkdir -p build
-                cd build
-                cmake .. \
-                    -DCMAKE_C_COMPILER=clang \
-                    -DCMAKE_C_FLAGS="$CFLAGS" \
-                    -DCMAKE_ASM_COMPILER=clang \
-                    -DCMAKE_ASM_FLAGS="$CFLAGS" \
-                    -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS" \
-                    -DCMAKE_SYSTEM_NAME="Generic" \
-                    -DARCH="$ARCH"
-                make -j$(nproc)
-                cd ..
+                cargo build
             }
             br() {
               b
-              qemu-system-$ARCH -kernel build/kernel -serial stdio
+              qemu-system-$ARCH -kernel target/i686-unknown-linux-gnu/debug/xleb -serial stdio
             }
             bt() {
                 if [ -z "$TARGET" ]; then
                     echo "Error: target not set. Use 'set_target <arch>' first."
                     return 1
                 fi
-                mkdir -p build
-                cd build
-                cmake .. \
-                    -DCMAKE_C_COMPILER=clang \
-                    -DCMAKE_C_FLAGS="$CFLAGS" \
-                    -DCMAKE_ASM_COMPILER=clang \
-                    -DCMAKE_ASM_FLAGS="$CFLAGS" \
-                    -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS" \
-                    -DCMAKE_SYSTEM_NAME="Generic" \
-                    -DARCH="$ARCH" \
-                    -DENABLE_TESTS=ON
-                make -j$(nproc)
-                cd ..
+                cargo build
             }
             btr() {
               bt
-              qemu-system-$ARCH -kernel build/kernel -serial stdio
+              qemu-system-$ARCH -kernel target/i686-unknown-linux-gnu/debug/xleb -serial stdio
             }
             bd() {
               b
-              qemu-system-$ARCH -kernel build/kernel -serial stdio -s -S
+              qemu-system-$ARCH -kernel target/i686-unknown-linux-gnu/debug/xleb -serial stdio -s -S
             }
             cl() {
-              rm -rf build* rust/target
+              rm -rf target
               echo "Removed all build directories"
             }
             cbr() {
@@ -129,7 +97,7 @@
             echo "  cl - delete all build directories"
             echo "  cbr - delete all build + build kernel + run with qemu"
             echo "  cbtr - delete all build + build tests + run with qemu"
-            echo "  d - start lldb + connect to localhost:1234"
+            echo "  NOTE: tests is not supported now because kernel is rewrited to Rust"
           '';
         };
       }

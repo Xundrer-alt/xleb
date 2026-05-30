@@ -1,0 +1,14 @@
+[package]
+name = "xleb"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "xleb"
+path = "src/kmain.rs"
+
+[profile.release]
+panic = "abort"
+
+[profile.dev]
+panic = "abort"
