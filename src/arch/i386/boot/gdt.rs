@@ -43,7 +43,3 @@ reload_cs:
     ret
 "#
 );
-
-unsafe extern "C" {
-    pub fn gdt_load();
-}

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0
 // Copyright (c) 2026 Xundrer-alt
-
 use core::arch::global_asm;
 
 global_asm!(
@@ -79,4 +78,6 @@ boot_page_table:
 stack_limit:
     .skip 16384
 stack_top:
-"#, options(att_syntax));
+"#,
+    options(att_syntax)
+);

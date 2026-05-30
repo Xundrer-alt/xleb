@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 // Copyright (c) 2026 Xundrer-alt
 use core::fmt;
-pub mod uart;
+mod uart;
 use self::uart::uart_putc;
 
-pub struct UartWriter;
+pub(crate) struct UartWriter;
 impl fmt::Write for UartWriter {
     fn write_str(&mut self, s: &str) -> fmt::Result {
         for &b in s.as_bytes() {
@@ -13,7 +13,7 @@ impl fmt::Write for UartWriter {
         Ok(())
     }
 }
-pub fn print(args: fmt::Arguments) {
+pub(crate) fn print(args: fmt::Arguments) {
     use core::fmt::Write;
     let _ = UartWriter.write_fmt(args);
 }
@@ -45,21 +45,21 @@ macro_rules! debug {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        $crate::print!("\x1b[32m[INFO ] \x1b[0m");
+        $crate::print!("\x1b[32m[INFO ] ({}:{}) \x1b[0m", file!(), line!());
         $crate::println!($($arg)*);
     };
 }
 #[macro_export]
 macro_rules! warn {
     ($($arg:tt)*) => {
-        $crate::print!("\x1b[33m[WARN ] \x1b[0m");
+        $crate::print!("\x1b[33m[WARN ] ({}:{}) \x1b[0m", file!(), line!());
         $crate::println!($($arg)*);
     };
 }
 #[macro_export]
 macro_rules! error {
     ($($arg:tt)*) => {
-        $crate::print!("\x1b[31m[ERROR] \x1b[0m");
+        $crate::print!("\x1b[31m[ERROR] ({}:{}) \x1b[0m", file!(), line!());
         $crate::println!($($arg)*);
     };
 }

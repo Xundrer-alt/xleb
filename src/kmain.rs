@@ -3,12 +3,12 @@
 #![no_std]
 #![no_main]
 
-use core::panic::PanicInfo;
 use crate::arch::Arch;
-pub mod arch;
+use core::panic::PanicInfo;
+mod arch;
 
 #[unsafe(no_mangle)]
-pub extern "C" fn kmain() -> ! {
+pub(crate) extern "C" fn kmain() -> ! {
     arch::CurrentArch::interrupt_init();
     arch::CurrentArch::halt()
 }

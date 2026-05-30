@@ -32,21 +32,11 @@ unsafe fn uart_write_byte(c: u8) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn uart_putc(c: u8) {
+pub(crate) extern "C" fn uart_putc(c: u8) {
     unsafe {
         if c == b'\n' {
             uart_write_byte(b'\r');
         }
         uart_write_byte(c);
-    }
-}
-#[unsafe(no_mangle)]
-pub extern "C" fn uart_puts(s: *const u8) {
-    let mut i = 0;
-    unsafe {
-        while *s.add(i) != 0 {
-            uart_putc(*s.add(i));
-            i += 1;
-        }
     }
 }

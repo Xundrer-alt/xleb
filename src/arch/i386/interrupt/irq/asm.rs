@@ -57,12 +57,10 @@ irq_common:
     iret
 
 .section .rodata
-.globl irq_entry_table
+.global irq_entry_table
 irq_entry_table:
     .long irq32, irq33, irq34, irq35, irq36, irq37, irq38, irq39
     .long irq40, irq41, irq42, irq43, irq44, irq45, irq46, irq47
-"#, options(att_syntax));
-
-unsafe extern "C" {
-    pub static irq_entry_table: [*const u8; 16];
-}
+"#,
+    options(att_syntax)
+);

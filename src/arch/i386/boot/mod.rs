@@ -1,3 +1,5 @@
-pub mod gdt;
-pub mod entry;
-pub mod multiboot1;
+// SPDX-License-Identifier: GPL-2.0
+// Copyright (c) 2026 Xundrer-alt
+mod entry;
+mod gdt;
+mod multiboot1;
