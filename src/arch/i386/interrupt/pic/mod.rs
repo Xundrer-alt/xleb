@@ -11,7 +11,7 @@ const ICW1_INIT: u8 = 0x10;
 const ICW1_ICW4: u8 = 0x01;
 const ICW4_8086: u8 = 0x01;
 
-unsafe fn inb(port: u16) -> u8 {
+pub(crate) unsafe fn inb(port: u16) -> u8 {
     let result: u8;
     unsafe {
         asm!(
@@ -23,7 +23,7 @@ unsafe fn inb(port: u16) -> u8 {
     }
     result
 }
-unsafe fn outb(port: u16, value: u8) {
+pub(crate) unsafe fn outb(port: u16, value: u8) {
     unsafe {
         asm!(
             "out dx, al",

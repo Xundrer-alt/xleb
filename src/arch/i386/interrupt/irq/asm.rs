@@ -44,7 +44,7 @@ irq_common:
     mov %ax, %gs
 
     pushl %esp
-    # call irq_handler - not released yet
+    call irq_handler
     addl $4, %esp
 
     popl %gs

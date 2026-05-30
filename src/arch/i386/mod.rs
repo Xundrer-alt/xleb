@@ -5,8 +5,9 @@ use core::arch::asm;
 
 mod boot;
 pub(crate) mod debug;
-mod interrupt;
+pub(crate) mod interrupt;
 mod regs;
+mod timer;
 
 pub(crate) struct I386Arch;
 impl Arch for I386Arch {
@@ -17,7 +18,8 @@ impl Arch for I386Arch {
             }
         }
     }
-    fn interrupt_init() {
+    fn init() {
         interrupt::init();
+        timer::init();
     }
 }

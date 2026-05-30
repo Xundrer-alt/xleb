@@ -3,8 +3,8 @@
 mod asm;
 
 use super::idt::Idt;
-use crate::{debug,info,error};
 use crate::arch::i386::regs::Regs;
+use crate::{debug, error, info};
 
 unsafe extern "C" {
     static isr_entry_table: [u32; 32];
@@ -51,25 +51,25 @@ pub(crate) extern "C" fn isr_handler(regs: &mut Regs) {
     if int_no == 1 || int_no == 3 {
         debug!("Debug exception {}: {}", int_no, EX_NAMES[int_no]);
         debug!(
-            "EAX: 0x{:x}, EBX: 0x{:x}, ECX: 0x{:x}, EDX: 0x{:x}",
+            "EAX: 0x{:X}, EBX: 0x{:X}, ECX: 0x{:X}, EDX: 0x{:X}",
             regs.eax, regs.ebx, regs.ecx, regs.edx
         );
         debug!(
-            "EIP: 0x{:x}, CS: 0x{:x}, EFLAGS: 0x{:x}",
+            "EIP: 0x{:X}, CS: 0x{:X}, EFLAGS: 0x{:X}",
             regs.eip, regs.cs, regs.eflags
         );
         return;
     }
     error!(
-        "Fatal exception {}: {}. Error code: 0x{:x}",
+        "Fatal exception {}: {}. Error code: 0x{:X}",
         int_no, EX_NAMES[int_no], regs.err_code
     );
     error!(
-        "EAX: 0x{:x}, EBX: 0x{:x}, ECX: 0x{:x}, EDX: 0x{:x}",
+        "EAX: 0x{:X}, EBX: 0x{:X}, ECX: 0x{:X}, EDX: 0x{:X}",
         regs.eax, regs.ebx, regs.ecx, regs.edx
     );
     error!(
-        "EIP: 0x{:x}, CS: 0x{:x}, EFLAGS: 0x{:x}",
+        "EIP: 0x{:X}, CS: 0x{:X}, EFLAGS: 0x{:X}",
         regs.eip, regs.cs, regs.eflags
     );
     panic!("Fatal exception (see above)");

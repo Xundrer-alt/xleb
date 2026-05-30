@@ -2,7 +2,7 @@
 // Copyright (c) 2026 Xundrer-alt
 pub(crate) trait Arch {
     fn halt() -> !;
-    fn interrupt_init();
+    fn init();
 }
 
 #[cfg(target_arch = "x86")]

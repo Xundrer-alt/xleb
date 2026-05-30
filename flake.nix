@@ -28,6 +28,7 @@
             qemu
             rust-nightly
             cargo
+            rustfmt
           ];
 
           shellHook = ''

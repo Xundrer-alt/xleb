@@ -9,7 +9,7 @@ mod arch;
 
 #[unsafe(no_mangle)]
 pub(crate) extern "C" fn kmain() -> ! {
-    arch::CurrentArch::interrupt_init();
+    arch::CurrentArch::init();
     arch::CurrentArch::halt()
 }
 
