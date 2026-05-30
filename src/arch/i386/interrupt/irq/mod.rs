@@ -4,8 +4,8 @@ mod asm;
 
 use super::idt::Idt;
 use super::pic;
-use crate::{debug,info,warn,error};
 use crate::arch::i386::regs::Regs;
+use crate::{debug, error, info, warn};
 pub type IrqHandler = extern "C" fn(regs: &mut Regs);
 static mut IRQ_TABLE: [Option<IrqHandler>; 16] = [None; 16];
 
@@ -37,6 +37,18 @@ pub(crate) fn register_handler(irq: u8, handler: IrqHandler) {
         IRQ_TABLE[irq as usize] = Some(handler);
         pic::unmask_irq(irq);
         debug!("IRQ{} handler registered", irq);
+    }
+}
+
+#[allow(dead_code)]
+pub(crate) fn unregister_handler(irq: u8) {
+    if irq >= 16 {
+        error!("Invalid IRQ ({})", irq);
+    }
+    unsafe {
+        IRQ_TABLE[irq as usize] = None;
+        pic::mask_irq(irq);
+        debug!("IRQ{} handler unregistered", irq);
     }
 }
 

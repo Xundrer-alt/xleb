@@ -21,5 +21,6 @@ impl Arch for I386Arch {
     fn init() {
         interrupt::init();
         timer::init();
+        boot::init();
     }
 }

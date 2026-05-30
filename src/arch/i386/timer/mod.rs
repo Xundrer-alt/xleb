@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0
+// Copyright (c) 2026 Xundrer-alt
 use super::interrupt::irq;
 use crate::arch::i386::regs::Regs;
 use super::interrupt::pic;
@@ -26,7 +28,18 @@ pub fn ticks() -> u32 {
     TICKS.load(Ordering::Relaxed)
 }
 
+pub fn sleep_ticks(ticks: u32) {
+    let start = TICKS.load(Ordering::Relaxed);
+    loop {
+        let now = TICKS.load(Ordering::Relaxed);
+        let elapsed = now.wrapping_sub(start);
+        if elapsed >= ticks {
+            break;
+        }
+        core::hint::spin_loop();
+    }
+}
+
 extern "C" fn timer_handler(_regs: &mut Regs) {
-    let ticks = TICKS.fetch_add(1, Ordering::Relaxed);
-    crate::debug!("Timer tick: {}", ticks);
+    TICKS.fetch_add(1, Ordering::Relaxed);
 }
