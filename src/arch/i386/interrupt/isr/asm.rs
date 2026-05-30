@@ -67,7 +67,7 @@ isr_common:
 
     mov %esp, %eax
     push %eax
-    # call isr_handler - not released yet
+    call isr_handler
     add $4, %esp
 
     pop %gs

@@ -8,6 +8,5 @@ rustflags = [
     "-C", "link-arg=-nostdlib",
     "-C", "link-arg=-T",
     "-C", "link-arg=src/arch/i386/boot/linker.ld",
-    "-C", "relocation-model=static",
-    "-C", "llvm-args=-x86-asm-syntax=att",
+    "-C", "relocation-model=static"
 ]

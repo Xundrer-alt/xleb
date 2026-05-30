@@ -50,6 +50,14 @@ cbtr() {
     cl
     btr
 }
+release() {
+    cl
+    if [ -z "$TARGET" ]; then
+        echo "Error: target not set. Use 'set_target <arch>' first."
+        return 1
+    fi
+    cargo build --release --target $TARGET
+}
 set_target i386
 echo "Available commands:"
 echo "  set_target i386"
@@ -61,4 +69,5 @@ echo "  bd - build kernel + run with qemu (with options -s -S)"
 echo "  cl - delete all build directories"
 echo "  cbr - delete all build + build kernel + run with qemu"
 echo "  cbtr - delete all build + build tests + run with qemu"
+echo "  release - build release kernel for current target"
 echo "  NOTE: tests is not supported now because kernel is rewrited to Rust"

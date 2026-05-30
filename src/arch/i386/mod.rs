@@ -4,8 +4,9 @@ use super::Arch;
 use core::arch::asm;
 
 mod boot;
-mod debug;
+pub(crate) mod debug;
 mod interrupt;
+mod regs;
 
 pub(crate) struct I386Arch;
 impl Arch for I386Arch {

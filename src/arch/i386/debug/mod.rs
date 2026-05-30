@@ -45,21 +45,21 @@ macro_rules! debug {
 #[macro_export]
 macro_rules! info {
     ($($arg:tt)*) => {
-        $crate::print!("\x1b[32m[INFO ] ({}:{}) \x1b[0m", file!(), line!());
+        $crate::print!("\x1b[32m[INFO ] \x1b[0m");
         $crate::println!($($arg)*);
     };
 }
 #[macro_export]
 macro_rules! warn {
     ($($arg:tt)*) => {
-        $crate::print!("\x1b[33m[WARN ] ({}:{}) \x1b[0m", file!(), line!());
+        $crate::print!("\x1b[33m[WARN ] \x1b[0m");
         $crate::println!($($arg)*);
     };
 }
 #[macro_export]
 macro_rules! error {
     ($($arg:tt)*) => {
-        $crate::print!("\x1b[31m[ERROR] ({}:{}) \x1b[0m", file!(), line!());
+        $crate::print!("\x1b[31m[ERROR] \x1b[0m");
         $crate::println!($($arg)*);
     };
 }

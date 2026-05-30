@@ -6,6 +6,6 @@ pub(crate) trait Arch {
 }
 
 #[cfg(target_arch = "x86")]
-mod i386;
+pub(crate) mod i386;
 #[cfg(target_arch = "x86")]
 pub(crate) use i386::I386Arch as CurrentArch;

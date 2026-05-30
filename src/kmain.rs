@@ -15,5 +15,11 @@ pub(crate) extern "C" fn kmain() -> ! {
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
-    loop {}
+    error!("KERNEL PANIC");
+    error!("{}", _info.message());
+    if let Some(location) = _info.location() {
+        error!("Location: {}:{}", location.file(), location.line());
+    }
+    error!("Processor is halting now");
+    arch::CurrentArch::halt()
 }
