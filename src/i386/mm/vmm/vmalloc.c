@@ -34,10 +34,25 @@ void* vmalloc(uint32_t *page_directory, uint32_t size, uint32_t flags) {
         uint32_t paddr = (uint32_t)ppage_alloc(0, flags);
         if (!paddr) {
             ERROR("vmalloc: failed to allocate physical page %u", i);
-            // TODO: free
+            for (uint32_t j = 0; j < i; j++) {
+                vpage_free(page_directory, vaddr + j * PAGE_SIZE, 0);
+            }
             return NULL;
         }
         vmm_map(page_directory, vaddr + i * PAGE_SIZE, paddr, PAGE_PRESENT | PAGE_WRITE);
     }
     return (void*)vaddr;
+}
+
+void vfree(uint32_t *page_directory, void* ptr, uint32_t size) {
+    if (!page_directory || !ptr || size == 0) {
+        ERROR("vfree: invalid parameters");
+        return;
+    }
+    uint32_t vaddr = (uint32_t)ptr;
+    uint32_t aligned_size = (size + PAGE_SIZE - 1) & ~(PAGE_SIZE - 1);
+    uint32_t pages = aligned_size / PAGE_SIZE;
+    for (uint32_t i = 0; i < pages; i++) {
+        vpage_free(page_directory, vaddr + i * PAGE_SIZE, 0);
+    }
 }

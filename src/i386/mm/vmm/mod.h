@@ -13,5 +13,8 @@
 #define PAGE_GLOBAL   0x100
 
 void vmm_map(uint32_t *page_directory, uint32_t virt_addr, uint32_t phys_addr, uint32_t flags);
+void vmm_unmap(uint32_t *page_directory, uint32_t virt_addr);
 void* vpage_alloc(uint32_t *page_directory, uint32_t vaddr, uint32_t order, uint32_t flags);
+void vpage_free(uint32_t *page_directory, uint32_t vaddr, uint32_t order);
 void* vmalloc(uint32_t *page_directory, uint32_t order, uint32_t flags);
+void vfree(uint32_t *page_directory, void* ptr, uint32_t size);

@@ -4,7 +4,7 @@
 #include "debug.h"
 #include "halt.h"
 #include "interrupt/init.h"
-#include "mm/kheap/mod.h"
+#include "mm/vmm/mod.h"
 #include "mm/mod.h"
 #include "mm/virtconv.h"
 #include "stdint.h"
@@ -15,6 +15,7 @@ uint32_t tests_success = 0;
 uint32_t tests_failed = 0;
 uint8_t must_caught_exception = 0;
 static uint8_t th_flag = 0;
+extern uint32_t kernel_page_directory[1024];
 
 void test_th() {
     INFO("test thread: hello world, i'm working");
@@ -49,7 +50,7 @@ void ktest() {
     INFO("Test 2: Memory Management");
     mm_init();
     INFO("Allocating some page...");
-    uint32_t *num = kmalloc(4);
+    uint32_t *num = vmalloc(kernel_page_directory, 4, 0);
     INFO("Writing 31 into *num...");
     *num = 31;
     INFO("Reading *num: %d", *num);
@@ -59,7 +60,7 @@ void ktest() {
         test_failed();
     }
     INFO("Freeing *num");
-    kfree(num);
+    vfree(kernel_page_directory, num, 4);
     INFO("Test 3: Timer");
     timer_init();
     uint32_t ftm = timer_get_ticks();

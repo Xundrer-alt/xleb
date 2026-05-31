@@ -19,3 +19,14 @@ void* vpage_alloc(uint32_t *page_directory, uint32_t vaddr, uint32_t order, uint
     vmm_map(page_directory, vaddr, paddr, PAGE_PRESENT | PAGE_WRITE);
     return (void*)vaddr;
 }
+
+void vpage_free(uint32_t *page_directory, uint32_t vaddr, uint32_t order) {
+    if (!page_directory || !vaddr) {
+        ERROR("vpage_free: invalid parameters");
+        return;
+    }
+    uint32_t num_pages = 1 << order;
+    for (uint32_t i = 0; i < num_pages; i++) {
+        vmm_unmap(page_directory, vaddr + i * PAGE_SIZE);
+    }
+}
