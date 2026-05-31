@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0
 // Copyright (c) 2026 Xundrer-alt
 #include "debug.h"
-#include "halt.h"
 #include "mm/ppage/mod.h"
 #include "mm/vmm/mod.h"
 #include "mm/virtconv.h"
@@ -18,6 +17,5 @@ void* vpage_alloc(uint32_t *page_directory, uint32_t vaddr, uint32_t order, uint
         return NULL;
     }
     vmm_map(page_directory, vaddr, paddr, PAGE_PRESENT | PAGE_WRITE);
-    
     return (void*)vaddr;
 }
