@@ -1,5 +1,6 @@
 set(SRC
     init.c
+    page_fault.c
 )
 target_sources(kernel PRIVATE ${SRC})
 add_subdirectory(kheap)

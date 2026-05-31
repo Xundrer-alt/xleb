@@ -11,7 +11,7 @@
 thread_t* thread_create(void (*entry)()) {
     thread_t* thread = (thread_t*)kmalloc(sizeof(thread_t));
     if (!thread) return NULL;
-    void* stack = kmalloc(STACK_SIZE / 1024);
+    void* stack = kmalloc(STACK_SIZE / 1024); // incorrect, but without page fault
     if (!stack) {
         kfree(thread);
         return NULL;

@@ -5,13 +5,14 @@
 #include "mm/kheap/mod.h"
 #include "mm/ppage/mod.h"
 #include "mm/virtconv.h"
+#include "mm/vmm/lmem.h"
 #include "mm/vmm/mod.h"
 #include "stddef.h"
 #include "stdint.h"
 #include "string.h"
 
 extern uint32_t kernel_page_directory[1024];
-#define KHEAP_START 0xC0800000
+#define KHEAP_START 0xC0400000 + LMEM_MAX_SIZE
 #define KHEAP_LIMIT (256 * 1024 * 1024)
 static uint32_t heap_brk = KHEAP_START;
 heap_block_t *heap_start = NULL;
